@@ -18,7 +18,7 @@ public class Item implements Serializable{
     private String type;
     private String text;
     public int numberOfKids(){
-        return this.kids.size();
+        return this.kids == null ? 0 : this.kids.size();
     }
     public boolean isStory(){ return this.type.equals("story"); }
 }

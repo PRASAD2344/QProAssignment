@@ -1,6 +1,7 @@
 package com.qpro.service;
 
 import com.qpro.bo.Item;
+import com.qpro.bo.User;
 import com.qpro.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -55,5 +56,11 @@ public class DemoService {
                 .map(this::getItem)
                 .sorted(Comparator.comparingInt(Item::numberOfKids).reversed())
                 .collect(Collectors.toList());
+    }
+
+    public User getUser(String userName) {
+        String url = hackerNewBaseURL + "/user/"+userName+".json";
+        User response = restTemplate.getForEntity(url, User.class).getBody();
+        return response;
     }
 }
