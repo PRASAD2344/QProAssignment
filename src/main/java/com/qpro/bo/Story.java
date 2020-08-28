@@ -7,6 +7,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class Story implements Serializable{
+    private long id;
     private String title;
     private String url;
     private long score;
