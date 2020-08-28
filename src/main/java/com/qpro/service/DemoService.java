@@ -1,7 +1,7 @@
 package com.qpro.service;
 
-import com.qpro.bo.Story;
-import com.qpro.repository.StoryRepository;
+import com.qpro.bo.Item;
+import com.qpro.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,30 +16,44 @@ import java.util.stream.Collectors;
 public class DemoService {
 
     @Autowired
-    StoryRepository storyRepository;
+    ItemRepository itemRepository;
     private RestTemplate restTemplate = new RestTemplate();
     private String hackerNewBaseURL = "https://hacker-news.firebaseio.com/v0";
 
-    public Story getStory(long storyId) {
-        if(storyRepository.containsKey(storyId)){
-            return storyRepository.findById(storyId);
+    public Item getItem(long itemId) {
+        if(itemRepository.containsKey(itemId)){
+            return itemRepository.findById(itemId);
         }
-        String url = hackerNewBaseURL + "/item/"+storyId+".json";
-        Story response = restTemplate.getForEntity(url, Story.class).getBody();
-        storyRepository.save(response);
+        String url = hackerNewBaseURL + "/item/"+itemId+".json";
+        Item response = restTemplate.getForEntity(url, Item.class).getBody();
+        itemRepository.save(response);
         return response;
     }
 
-    public List<Story> bestStories(){
+    public List<Item> bestStories(){
         String url = hackerNewBaseURL + "/beststories.json";
         ResponseEntity<Long[]> response = restTemplate.getForEntity(url, Long[].class);
-        return Arrays.stream(response.getBody()).limit(10).map(storyId -> getStory(storyId)).collect(Collectors.toList());
+        return Arrays.stream(response.getBody())
+                .limit(10)
+                .map(storyId -> getItem(storyId))
+                .collect(Collectors.toList());
     }
 
-    public List<Story> pastStories(){
-        return storyRepository.findAll()
+    public List<Item> pastStories(){
+        return itemRepository.findAll()
                 .stream()
-                .sorted(Comparator.comparing(Story::getScore).reversed())
+                .filter(Item::isStory)
+                .sorted(Comparator.comparingLong(Item::getScore).reversed())
+                .collect(Collectors.toList());
+    }
+
+    public List<Item> comments(long storyId){
+        Item item = getItem(storyId);
+        return item.getKids()
+                .stream()
+                .limit(10)
+                .map(this::getItem)
+                .sorted(Comparator.comparingInt(Item::numberOfKids).reversed())
                 .collect(Collectors.toList());
     }
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "cache")
 @Data
 public class CacheConfigurationProperties {
-    private long timeoutSeconds = 60;
+    private long timeoutSeconds = -1;
     private int redisPort = 6379;
     private String redisHost = "localhost";
     // Mapping of cacheNames to expire-after-write timeout in seconds

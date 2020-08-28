@@ -1,6 +1,6 @@
 package com.qpro.repository;
 
-import com.qpro.bo.Story;
+import com.qpro.bo.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -10,14 +10,14 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 @Repository
-public class StoryRepository {
+public class ItemRepository {
 
     private RedisTemplate<String, Object> redisTemplate;
     private HashOperations hashOperations;
-    private final String KEY = "storyCache";
+    private final String KEY = "itemCache";
 
     @Autowired
-    public StoryRepository(RedisTemplate<String, Object> redisTemplate){
+    public ItemRepository(RedisTemplate<String, Object> redisTemplate){
         this.redisTemplate = redisTemplate;
     }
 
@@ -26,24 +26,24 @@ public class StoryRepository {
         hashOperations = redisTemplate.opsForHash();
     }
 
-    public boolean containsKey(long storyId){
-        return hashOperations.get(KEY, storyId) != null;
+    public boolean containsKey(long itemId){
+        return hashOperations.get(KEY, itemId) != null;
     }
 
-    public void save(Story story){
-        hashOperations.put(KEY, story.getId(), story);
+    public void save(Item item){
+        hashOperations.put(KEY, item.getId(), item);
     }
 
-    public void update(Story story){
-        save(story);
+    public void update(Item item){
+        save(item);
     }
 
-    public List<Story> findAll(){
+    public List<Item> findAll(){
         return hashOperations.values(KEY);
     }
 
-    public Story findById(long storyId){
-        return (Story) hashOperations.get(KEY, storyId);
+    public Item findById(long itemId){
+        return (Item) hashOperations.get(KEY, itemId);
     }
 
 }

@@ -1,16 +1,16 @@
-package com.qpro.bo;
+package com.qpro.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class Story implements Serializable{
-    private long id;
+public class StoryDTO implements Serializable {
     private String title;
     private String url;
-    private long score;
-    private long time;
-    private String by;
+    private Long score;
+    private Long submittedAt;
+    private String submittedBy;
 }
