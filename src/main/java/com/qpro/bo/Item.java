@@ -17,6 +17,7 @@ public class Item implements Serializable{
     private List<Long> kids;
     private String type;
     private String text;
+    private boolean topItemRetrieval;
     public int numberOfKids(){
         return this.kids == null ? 0 : this.kids.size();
     }
