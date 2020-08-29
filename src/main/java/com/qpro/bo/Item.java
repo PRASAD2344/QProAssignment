@@ -3,6 +3,7 @@ package com.qpro.bo;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,12 +15,11 @@ public class Item implements Serializable{
     private Long score;
     private Long time;
     private String by;
-    private List<Long> kids;
+    private List<Long> kids = new ArrayList<>();
     private String type;
     private String text;
-    private boolean topItemRetrieval;
     public int numberOfKids(){
-        return this.kids == null ? 0 : this.kids.size();
+        return this.kids.size();
     }
     public boolean isStory(){ return this.type.equals("story"); }
 }

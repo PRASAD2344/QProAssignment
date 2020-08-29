@@ -11,11 +11,11 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.Years;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,17 +30,16 @@ public class DemoController {
     ModelMapper modelMapper;
 
     @GetMapping("/best-stories")
-    @Cacheable(value="bestStoriesCache")
-    public List<StoryDTO> bestStories() {
-        return demoService.bestStories()
+    public List<StoryDTO> bestStories(HttpServletRequest request) {
+        return demoService.bestStories(request.getRemoteAddr())
                 .stream()
                 .map(item -> modelMapper.map(item, StoryDTO.class))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/past-stories")
-    public List<StoryDTO> pastStories() {
-        return demoService.pastStories()
+    public List<StoryDTO> pastStories(HttpServletRequest request) {
+        return demoService.pastStories(request.getRemoteAddr())
                 .stream()
                 .map(item -> modelMapper.map(item, StoryDTO.class))
                 .collect(Collectors.toList());

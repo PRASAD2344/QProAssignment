@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,5 +14,5 @@ public class User implements Serializable {
     private Long created;
     private String id;
     private Long karma;
-    private List<Long> submitted;
+    private List<Long> submitted = new ArrayList<>();
 }
