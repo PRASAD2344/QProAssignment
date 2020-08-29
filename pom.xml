@@ -8,10 +8,10 @@
 		<version>2.3.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<groupId>com.qpro</groupId>
+	<artifactId>QProAssignment</artifactId>
+	<name>QProAssignment</name>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
 	<description>QPro Demo project for Spring Boot</description>
 
 	<properties>
@@ -66,6 +66,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>QProAssignment</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
