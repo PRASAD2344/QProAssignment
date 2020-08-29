@@ -30,8 +30,8 @@ public class DemoService {
     @Autowired
     AppUserRepository appUserRepository;
 
-    private RestTemplate restTemplate = new RestTemplate();
-    private String hackerNewBaseURL = "https://hacker-news.firebaseio.com/v0";
+    RestTemplate restTemplate = new RestTemplate();
+    String hackerNewBaseURL = "https://hacker-news.firebaseio.com/v0";
 
     private Item getItem(long itemId) {
         if(itemRepository.containsKey(itemId)){
