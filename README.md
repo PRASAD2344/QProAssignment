@@ -15,11 +15,11 @@
 
 >##Decisions
 1. `/best-stories` - Should return the top 10 best stories ranked by score in the last 15 minutes
-    * https://hacker-news.firebaseio.com/v0/beststories.json endpoint will already sort entries based on score, so taking top 10 from that list. Effectively so sorting based on scored will be done by application
+    * https://hacker-news.firebaseio.com/v0/beststories.json endpoint will already sort entries based on score, so taking top 10 from that list. Effectively no sorting(based on score) will be done by application
 2. `/past-stories` - Should return all the past top stories that were served previously
     * We will store & return all the stories which were being served to user when he/she make call(s) to `/best-stories`
     * While returning items, we will sort them based on`score`
 3. `/comments` - Should return the top 10 comments on a given story sorted by total number of child comments. Each comment should contain comment text, user’s hacker news handle and how old the users hacker news profile is in years
-    * We will simply list all comments, and limit it to top 10. I am not sure what order hackernews api will follow, either lastest one first or the one with most child comments.
+    * We will simply list all comments, and limit it to top 10. I am not sure what order hackernews api will follow, either lastest one first or the one with most child comments(Note: We can get all the comments and sort them by total number of child comments, but it's very un-responsive).
     * We will sort the 10 comments, based on number of child comments using `kids` collection size. Child comment will in-turn contains child comments, we will not go there as part of this demo.
  
